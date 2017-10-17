@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
     public void testMatrixInCaseWith1x1Size() {
 
@@ -27,8 +28,8 @@ public class ExampleUnitTest {
     @Test
     public void testMatrixInCase2x2Size() {
         int[][] expected = new int[][]{
-                {1, 4},
-                {2, 3}
+                {4, 1},
+                {3, 2}
         };
 
         int[][] actual = MatrixHelper.generateMatrix(2);
@@ -39,9 +40,9 @@ public class ExampleUnitTest {
     @Test
     public void testMatrixInCase3x3Size() {
         int[][] expected = new int[][]{
-                {1, 9, 8},
-                {2, 10, 7},
-                {3, 4, 5}
+                {10, 2, 3},
+                {9, 1, 4},
+                {8, 7, 5}
         };
 
         int[][] actual = MatrixHelper.generateMatrix(3);
@@ -51,10 +52,10 @@ public class ExampleUnitTest {
     @Test
     public void testMatrixInCase4x4Size() {
         int[][] expected = new int[][]{
-                {1, 13, 12, 11},
-                {2, 14, 18, 10},
-                {3, 15, 17, 9},
-                {4, 5, 7 ,8}
+                {18, 5, 7, 8},
+                {17, 4, 1, 9},
+                {15, 3, 2, 10},
+                {14, 13, 12 ,11}
         };
 
         int[][] actual = MatrixHelper.generateMatrix(4);
