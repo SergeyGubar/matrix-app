@@ -37,7 +37,9 @@ public class InputFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO : Remove dummy number + validation
-                mActivityApi.startMatrixFragment(5);
+                mActivityApi.startMatrixFragment(Integer.valueOf(mMatrixSizeEditText
+                        .getText()
+                        .toString()));
             }
         });
         return inflatedView;

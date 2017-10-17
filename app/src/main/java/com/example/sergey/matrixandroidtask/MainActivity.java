@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityApi {
         Fragment fragment = new MatrixFragment();
         Bundle args = new Bundle();
         args.putInt(MATRIX_SIZE_KEY, size);
+        fragment.setArguments(args);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
