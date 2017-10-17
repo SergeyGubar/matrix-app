@@ -1,12 +1,16 @@
 package fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sergey.matrixandroidtask.R;
 
@@ -22,35 +26,44 @@ import static android.R.id.list;
 public class MatrixFragment extends Fragment {
 
     private static final String MATRIX_SIZE_KEY = "matrixsize";
-    private GridView mMatrix;
     private static int mSize;
-
+    private LinearLayout mViewGroup;
+    private static int mViewsAdded;
+    private Handler mHandler = new Handler();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
         Bundle args = getArguments();
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
-            // TODO : Extract matrix size here
             mSize = args.getInt(MATRIX_SIZE_KEY);
         }
-        mMatrix = inflatedView.findViewById(R.id.matrix_grid_view);
-        mMatrix = inflatedView.findViewById(R.id.matrix_grid_view);
-        ArrayList<Integer> list = new ArrayList<>();
-        mMatrix.setNumColumns(mSize);
-        for (int i = 0; i < mSize; i++) {
-            for(int j = 0;j < mSize;j++) {
-                list.add(Integer.valueOf(String.valueOf(i)+String.valueOf(j)));
-            }
-        }
-        MatrixGridViewAdapter adapter = new MatrixGridViewAdapter(getActivity(), list);
-        mMatrix.setAdapter(adapter);
+
+        mViewGroup = inflatedView.findViewById(R.id.main_container);
+
+        addNewTextView();
+
         return inflatedView;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler = new Handler();
+    }
 
+    private void addNewTextView() {
+        if (mViewsAdded < 5) {
+            mViewsAdded++;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    TextView textView = new TextView(getContext());
+                    textView.setText("test");
+                    mViewGroup.addView(textView, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    addNewTextView();
+                }
+            }, 500);
+        }
     }
 }
