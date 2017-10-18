@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sergey.matrixandroidtask.R;
 
@@ -36,8 +37,21 @@ public class InputFragment extends Fragment {
         mStartMatrixFragmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO : Remove dummy number + validation
-                mActivityApi.startMatrixFragment(5);
+                String text = mMatrixSizeEditText.getText().toString();
+                int matrixSize;
+                // Validation
+                try {
+                    matrixSize = Integer.parseInt(text);
+                    if(matrixSize < 1 || matrixSize > 1000) {
+                        Toast.makeText(getContext(), "Number is not in range 0 < n < 1000", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mActivityApi.startMatrixFragment(matrixSize);
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(getContext(), "Bad formatted number!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         return inflatedView;

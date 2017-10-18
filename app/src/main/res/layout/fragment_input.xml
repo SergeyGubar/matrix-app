@@ -14,9 +14,12 @@
         android:hint="@string/enter_matrix_size"/>
 
     <Button
+        android:layout_marginTop="16dp"
         android:id="@+id/draw_matrix_button"
         android:layout_width="match_parent"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:layout_below="@id/number_edit_text"
         android:text="@string/go"/>
 
