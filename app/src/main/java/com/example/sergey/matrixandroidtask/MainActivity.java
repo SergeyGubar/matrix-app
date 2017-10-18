@@ -11,6 +11,7 @@ import interfaces.MainActivityApi;
 public class MainActivity extends AppCompatActivity implements MainActivityApi {
 
     private static final String MATRIX_SIZE_KEY = "matrixsize";
+    private static final String DELAY_KEY = "delay";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityApi {
     }
 
     @Override
-    public void startMatrixFragment(int size) {
+    public void startMatrixFragment(int size, int delay) {
         Fragment fragment = new MatrixFragment();
         Bundle args = new Bundle();
         args.putInt(MATRIX_SIZE_KEY, size);
+        args.putInt(DELAY_KEY, delay);
         fragment.setArguments(args);
         getSupportFragmentManager()
                 .beginTransaction()

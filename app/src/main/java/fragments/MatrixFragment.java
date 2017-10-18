@@ -24,21 +24,25 @@ import model.WeirdMatrix;
 
 public class MatrixFragment extends Fragment {
 
+    private static final String TAG = "MatrixFragment";
     private static final String MATRIX_SIZE_KEY = "matrixsize";
+    private static final String DELAY_KEY = "delay";
     private static int mCellsNumber;
+    private static int mDelay;
     private LinearLayout mViewGroup;
     private static int mCellsAdded;
     private Handler mHandler = new Handler();
     private WeirdMatrix mMatrix;
-    private static final String TAG = "MatrixFragment";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
         mViewGroup = inflatedView.findViewById(R.id.main_container);
         Bundle args = getArguments();
+
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
             int matrixSize = args.getInt(MATRIX_SIZE_KEY);
+            mDelay = args.getInt(DELAY_KEY);
             mCellsNumber = (int) Math.pow(matrixSize, 2);
             mMatrix = new WeirdMatrix(matrixSize);
             inflateMatrix();
@@ -66,7 +70,7 @@ public class MatrixFragment extends Fragment {
                     mViewGroup.addView(textView, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     inflateMatrix();
                 }
-            }, 500);
+            }, mDelay);
         }
     }
 }
