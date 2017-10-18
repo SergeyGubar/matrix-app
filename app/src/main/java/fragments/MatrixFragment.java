@@ -1,5 +1,7 @@
 package fragments;
 
+import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -8,15 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sergey.matrixandroidtask.R;
 
+import customviews.MatrixView;
 import helpers.MatrixHelper;
-import model.WeirdMatrix;
 
 /**
  * Created by Sergey on 10/17/2017.
@@ -24,27 +24,48 @@ import model.WeirdMatrix;
 
 public class MatrixFragment extends Fragment {
 
-    private static final String MATRIX_SIZE_KEY = "matrixsize";
-    private static int mCellsNumber;
-    private LinearLayout mViewGroup;
-    private static int mCellsAdded;
-    private Handler mHandler = new Handler();
-    private WeirdMatrix mMatrix;
     private static final String TAG = "MatrixFragment";
+    private static final String MATRIX_SIZE_KEY = "matrixsize";
+    private static final String DELAY_KEY = "delay";
+    private static int mDelay;
+    private static int mMatrixSize;
+    private GridLayout mGridLayout;
+    private Handler mHandler = new Handler();
+    private static int[][] mData;
+
+    //end test
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
-        mViewGroup = inflatedView.findViewById(R.id.main_container);
+//        mGridLayout = inflatedView.findViewById(R.id.matrix_grid_layout);
+
+        LinearLayout layoutContainer = inflatedView.findViewById(R.id.main_container);
+
         Bundle args = getArguments();
+
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
-            int matrixSize = args.getInt(MATRIX_SIZE_KEY);
-            mCellsNumber = (int) Math.pow(matrixSize, 2);
-            mMatrix = new WeirdMatrix(matrixSize);
-            inflateMatrix();
+            mMatrixSize = args.getInt(MATRIX_SIZE_KEY);
+            mDelay = args.getInt(DELAY_KEY);
+            mData = MatrixHelper.generateMatrix(mMatrixSize);
         }
+
+        MatrixView view = new MatrixView(getContext(), mData);
+
+        layoutContainer.addView(view);
+
+        /* mGridLayout.setRowCount(mMatrixSize);
+        mGridLayout.setColumnCount(mMatrixSize);
+*/
+        /*for (int i = 0; i < mMatrixSize; i++) {
+            for (int j = 0; j < mMatrixSize; j++) {
+                addButton(i, j);
+            }
+        }*/
         return inflatedView;
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,21 +73,31 @@ public class MatrixFragment extends Fragment {
         mHandler = new Handler();
     }
 
-    //TODO : Improve View
-    private void inflateMatrix() {
-        if (mCellsAdded < mCellsNumber) {
-            mCellsAdded++;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    TextView textView = new TextView(getContext());
-                    //TODO : Value animator, setalpha
-                    String itemText = String.valueOf(mMatrix.getNextItem());
-                    textView.setText(itemText);
-                    mViewGroup.addView(textView, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    inflateMatrix();
-                }
-            }, 500);
-        }
+    /*private void addButton(final int i, final int j) {
+        int element = mData[i][j];
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Button btn = new Button(getContext());
+                String text = String.valueOf(mData[i][j]);
+                btn.setText(text);
+                GridLayout.Spec rowSpan = GridLayout.spec(i, 1, 1); //i
+                GridLayout.Spec columnSpan = GridLayout.spec(j, 1, 1); //j
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpan, columnSpan);
+                //TODO : remove deprecated methods
+                btn.setBackgroundColor(getResources().getColor(android.R.color.white));
+                btn.setBackground(getResources().getDrawable(R.drawable.my_button));
+                btn.setLayoutParams(params);
+                mGridLayout.addView(btn);
+            }
+        }, element * mDelay);
+    }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
+
+
 }

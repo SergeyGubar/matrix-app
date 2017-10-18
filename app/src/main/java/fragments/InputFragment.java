@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sergey.matrixandroidtask.R;
@@ -22,8 +24,11 @@ import interfaces.MainActivityApi;
 public class InputFragment extends Fragment {
     private Button mStartMatrixFragmentButton;
     private EditText mMatrixSizeEditText;
+    private TextView mDelayTextView;
+    private SeekBar mDelaySeekBar;
     private MainActivityApi mActivityApi;
-
+    private static final int SEEKBAR_MIN_VALUE = 100;
+    private static final int SEEKBAR_MAX_VALUE = 1000;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,6 +37,27 @@ public class InputFragment extends Fragment {
         // View initialization
         mStartMatrixFragmentButton = inflatedView.findViewById(R.id.draw_matrix_button);
         mMatrixSizeEditText = inflatedView.findViewById(R.id.number_edit_text);
+        mDelaySeekBar = inflatedView.findViewById(R.id.delay_seek_bar);
+        mDelayTextView = inflatedView.findViewById(R.id.delay_text_view);
+
+        mDelaySeekBar.setMax(SEEKBAR_MAX_VALUE - SEEKBAR_MIN_VALUE);
+        mDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int value = SEEKBAR_MIN_VALUE + progress;
+                mDelayTextView.setText(String.valueOf(value));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         // On button click - activity should replace this fragment by matrix fragment
         mStartMatrixFragmentButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +71,7 @@ public class InputFragment extends Fragment {
                     if(matrixSize < 1 || matrixSize > 1000) {
                         Toast.makeText(getContext(), "Number is not in range 0 < n < 1000", Toast.LENGTH_SHORT).show();
                     } else {
-                        mActivityApi.startMatrixFragment(matrixSize);
+                        mActivityApi.startMatrixFragment(matrixSize, mDelaySeekBar.getProgress() + SEEKBAR_MIN_VALUE);
                     }
                 } catch (NumberFormatException ex) {
                     ex.printStackTrace();

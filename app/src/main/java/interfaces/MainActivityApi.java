@@ -5,5 +5,5 @@ package interfaces;
  */
 
 public interface MainActivityApi {
-    void startMatrixFragment(int size);
+    void startMatrixFragment(int size, int delay);
 }
