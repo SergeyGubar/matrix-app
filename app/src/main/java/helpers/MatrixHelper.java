@@ -43,7 +43,6 @@ public class MatrixHelper {
                 matrix[counterToCenter - 1][cursor] = stack.pop();
             }
 
-
         }
 
         if (size % 2 == 1) {

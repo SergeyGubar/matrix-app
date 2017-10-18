@@ -1,4 +1,4 @@
-package fragments;
+package customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,12 +6,11 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
-import helpers.MatrixHelper;
+import java.util.Stack;
 
 /**
  * Created by Sergey on 10/18/2017.
@@ -30,6 +29,7 @@ public class MatrixView extends RelativeLayout {
         View.inflate(context, R.layout.matrix_layout, this);
         this.data = data;
         mHandler = new Handler();
+
         this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -46,19 +46,48 @@ public class MatrixView extends RelativeLayout {
                 return false;
             }
         });
-
     }
 
     private void fillMatrixItems() {
-        for (int i = 0; i < data.length; i++) {
+        /*for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data.length; j++) {
                 counter++;
                 inflateItem(i, j);
             }
+        }*/
+        int value = 1;
+        int cursor = 0;
+        int counterToCenter;
+        int center = data.length / 2;
+
+
+        for (counterToCenter = 1; counterToCenter <= center; counterToCenter++) {
+
+            for (cursor = counterToCenter - 1; cursor < data.length - counterToCenter + 1; cursor++) {
+                inflateItem(cursor, counterToCenter - 1);
+            }
+
+            for (cursor = counterToCenter; cursor < data.length - counterToCenter + 1; cursor++) {
+                inflateItem(data.length - counterToCenter, cursor);
+            }
+
+            for (cursor = data.length - counterToCenter - 1; cursor >= counterToCenter; cursor--) {
+                inflateItem(cursor, data.length - counterToCenter);
+            }
+
+            for (cursor = data.length - counterToCenter; cursor >= counterToCenter; cursor--) {
+                inflateItem(counterToCenter - 1, cursor);
+            }
+
+        }
+
+        if (data.length % 2 == 1) {
+            inflateItem(center, center);
         }
     }
 
     private void inflateItem(final int i, final int j) {
+        counter++;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -71,7 +100,7 @@ public class MatrixView extends RelativeLayout {
                 item.setLayoutParams(params);
                 MatrixView.this.addView(item);
             }
-        }, 500 * counter);
+        }, 2 * counter);
     }
 
 

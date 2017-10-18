@@ -1,18 +1,21 @@
 package fragments;
 
+import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
+import customviews.MatrixView;
 import helpers.MatrixHelper;
 
 /**
@@ -38,12 +41,7 @@ public class MatrixFragment extends Fragment {
 //        mGridLayout = inflatedView.findViewById(R.id.matrix_grid_layout);
 
         LinearLayout layoutContainer = inflatedView.findViewById(R.id.main_container);
-        MatrixView view = new MatrixView(getContext(), MatrixHelper.generateMatrix(200));
 
-        layoutContainer.addView(view);
-
-
-/*
         Bundle args = getArguments();
 
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
@@ -51,16 +49,23 @@ public class MatrixFragment extends Fragment {
             mDelay = args.getInt(DELAY_KEY);
             mData = MatrixHelper.generateMatrix(mMatrixSize);
         }
-        mGridLayout.setRowCount(mMatrixSize);
-        mGridLayout.setColumnCount(mMatrixSize);
 
-        for (int i = 0; i < mMatrixSize; i++) {
+        MatrixView view = new MatrixView(getContext(), mData);
+
+        layoutContainer.addView(view);
+
+        /* mGridLayout.setRowCount(mMatrixSize);
+        mGridLayout.setColumnCount(mMatrixSize);
+*/
+        /*for (int i = 0; i < mMatrixSize; i++) {
             for (int j = 0; j < mMatrixSize; j++) {
                 addButton(i, j);
             }
         }*/
         return inflatedView;
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,4 +98,6 @@ public class MatrixFragment extends Fragment {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
     }
+
+
 }

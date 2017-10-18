@@ -1,4 +1,4 @@
-package fragments;
+package customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
