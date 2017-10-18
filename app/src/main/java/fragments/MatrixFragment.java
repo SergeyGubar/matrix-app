@@ -9,16 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.LinearLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
 import helpers.MatrixHelper;
-import model.WeirdMatrix;
-
-import static android.R.attr.x;
-import static android.R.attr.y;
 
 /**
  * Created by Sergey on 10/17/2017.
@@ -40,9 +35,15 @@ public class MatrixFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
-        mGridLayout = inflatedView.findViewById(R.id.matrix_grid_layout);
+//        mGridLayout = inflatedView.findViewById(R.id.matrix_grid_layout);
+
+        LinearLayout layoutContainer = inflatedView.findViewById(R.id.main_container);
+        MatrixView view = new MatrixView(getContext(), MatrixHelper.generateMatrix(200));
+
+        layoutContainer.addView(view);
 
 
+/*
         Bundle args = getArguments();
 
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
@@ -50,7 +51,6 @@ public class MatrixFragment extends Fragment {
             mDelay = args.getInt(DELAY_KEY);
             mData = MatrixHelper.generateMatrix(mMatrixSize);
         }
-
         mGridLayout.setRowCount(mMatrixSize);
         mGridLayout.setColumnCount(mMatrixSize);
 
@@ -58,7 +58,7 @@ public class MatrixFragment extends Fragment {
             for (int j = 0; j < mMatrixSize; j++) {
                 addButton(i, j);
             }
-        }
+        }*/
         return inflatedView;
     }
 
@@ -68,7 +68,7 @@ public class MatrixFragment extends Fragment {
         mHandler = new Handler();
     }
 
-    private void addButton(final int i, final int j) {
+    /*private void addButton(final int i, final int j) {
         int element = mData[i][j];
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -76,8 +76,8 @@ public class MatrixFragment extends Fragment {
                 Button btn = new Button(getContext());
                 String text = String.valueOf(mData[i][j]);
                 btn.setText(text);
-                GridLayout.Spec rowSpan = GridLayout.spec(i, 1, 1);
-                GridLayout.Spec columnSpan = GridLayout.spec(j, 1, 1);
+                GridLayout.Spec rowSpan = GridLayout.spec(i, 1, 1); //i
+                GridLayout.Spec columnSpan = GridLayout.spec(j, 1, 1); //j
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpan, columnSpan);
                 //TODO : remove deprecated methods
                 btn.setBackgroundColor(getResources().getColor(android.R.color.white));
@@ -86,5 +86,11 @@ public class MatrixFragment extends Fragment {
                 mGridLayout.addView(btn);
             }
         }, element * mDelay);
+    }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 }
