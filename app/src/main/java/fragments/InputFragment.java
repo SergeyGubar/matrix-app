@@ -71,7 +71,6 @@ public class InputFragment extends Fragment {
                     if(matrixSize < 1 || matrixSize > 1000) {
                         Toast.makeText(getContext(), "Number is not in range 0 < n < 1000", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), String.valueOf(mDelaySeekBar.getProgress()), Toast.LENGTH_SHORT).show();
                         mActivityApi.startMatrixFragment(matrixSize, mDelaySeekBar.getProgress() + SEEKBAR_MIN_VALUE);
                     }
                 } catch (NumberFormatException ex) {
