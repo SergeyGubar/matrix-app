@@ -35,10 +35,10 @@ public class InputFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.fragment_input, container, false);
 
         // View initialization
-        mStartMatrixFragmentButton = inflatedView.findViewById(R.id.draw_matrix_button);
-        mMatrixSizeEditText = inflatedView.findViewById(R.id.number_edit_text);
-        mDelaySeekBar = inflatedView.findViewById(R.id.delay_seek_bar);
-        mDelayTextView = inflatedView.findViewById(R.id.delay_text_view);
+        mStartMatrixFragmentButton = (Button)inflatedView.findViewById(R.id.draw_matrix_button);
+        mMatrixSizeEditText = (EditText) inflatedView.findViewById(R.id.number_edit_text);
+        mDelaySeekBar = (SeekBar) inflatedView.findViewById(R.id.delay_seek_bar);
+        mDelayTextView = (TextView) inflatedView.findViewById(R.id.delay_text_view);
 
         mDelaySeekBar.setMax(SEEKBAR_MAX_VALUE - SEEKBAR_MIN_VALUE);
         mDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -18,7 +18,7 @@ public class MatrixItem extends RelativeLayout {
     public MatrixItem(Context context) {
         super(context);
         View.inflate(context, R.layout.matrix_item, this);
-        mTextView = findViewById(R.id.matrix_item_text_view);
+        mTextView = (TextView) findViewById(R.id.matrix_item_text_view);
     }
 
     public MatrixItem(Context context, AttributeSet attrs) {
