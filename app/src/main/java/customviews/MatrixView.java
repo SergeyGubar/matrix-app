@@ -23,26 +23,30 @@ public class MatrixView extends RelativeLayout {
     private int[][] data;
     private Handler mHandler;
     public static int counter = 0;
+    private int mDelay;
 
-    public MatrixView(Context context,final int[][] data) {
+    public MatrixView(Context context, final int[][] data, int delay) {
         super(context);
         View.inflate(context, R.layout.matrix_layout, this);
         this.data = data;
         mHandler = new Handler();
+        mDelay = delay;
 
+        //TODO : Weird delay bug is here
         this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 MatrixView.this.getViewTreeObserver().removeOnPreDrawListener(this);
                 mHeight = MatrixView.this.getHeight();
                 mWidth = MatrixView.this.getWidth();
-                itemDimension = mWidth / data.length;
+                itemDimension = 250;
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         fillMatrixItems();
                     }
                 });
+                fillMatrixItems();
                 return false;
             }
         });
@@ -94,9 +98,8 @@ public class MatrixView extends RelativeLayout {
                 item.setLayoutParams(params);
                 MatrixView.this.addView(item);
             }
-        }, 2 * counter);
+        }, mDelay * counter);
     }
-
 
 
     public MatrixView(Context context, AttributeSet attrs) {

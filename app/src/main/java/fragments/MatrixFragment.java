@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.example.sergey.matrixandroidtask.R;
@@ -38,7 +40,7 @@ public class MatrixFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
 
-        LinearLayout layoutContainer = inflatedView.findViewById(R.id.main_container);
+        NestedScrollView layoutContainer = inflatedView.findViewById(R.id.main_container);
 
         Bundle args = getArguments();
 
@@ -48,7 +50,7 @@ public class MatrixFragment extends Fragment {
             mData = MatrixHelper.generateMatrix(mMatrixSize);
         }
 
-        MatrixView view = new MatrixView(getContext(), mData);
+        MatrixView view = new MatrixView(getContext(), mData, mDelay);
 
         layoutContainer.addView(view);
 
