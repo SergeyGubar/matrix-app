@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
@@ -55,6 +57,7 @@ public class MatrixFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) inflatedView.findViewById(R.id.matrix_recycler_view);
         mAdapter = new MatrixRecyclerAdapter(getContext(), mMatrix.getMatrix());
+
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), mMatrixDimension);
         mRecyclerView.setAdapter(mAdapter);
