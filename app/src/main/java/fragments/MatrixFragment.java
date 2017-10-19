@@ -29,7 +29,6 @@ public class MatrixFragment extends Fragment {
     private static final String DELAY_KEY = "delay";
     private static int mDelay;
     private static int mMatrixSize;
-    private GridLayout mGridLayout;
     private Handler mHandler = new Handler();
     private static int[][] mData;
 
@@ -38,7 +37,6 @@ public class MatrixFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
-//        mGridLayout = inflatedView.findViewById(R.id.matrix_grid_layout);
 
         LinearLayout layoutContainer = inflatedView.findViewById(R.id.main_container);
 
@@ -54,14 +52,6 @@ public class MatrixFragment extends Fragment {
 
         layoutContainer.addView(view);
 
-        /* mGridLayout.setRowCount(mMatrixSize);
-        mGridLayout.setColumnCount(mMatrixSize);
-*/
-        /*for (int i = 0; i < mMatrixSize; i++) {
-            for (int j = 0; j < mMatrixSize; j++) {
-                addButton(i, j);
-            }
-        }*/
         return inflatedView;
     }
 
@@ -73,25 +63,6 @@ public class MatrixFragment extends Fragment {
         mHandler = new Handler();
     }
 
-    /*private void addButton(final int i, final int j) {
-        int element = mData[i][j];
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Button btn = new Button(getContext());
-                String text = String.valueOf(mData[i][j]);
-                btn.setText(text);
-                GridLayout.Spec rowSpan = GridLayout.spec(i, 1, 1); //i
-                GridLayout.Spec columnSpan = GridLayout.spec(j, 1, 1); //j
-                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpan, columnSpan);
-                //TODO : remove deprecated methods
-                btn.setBackgroundColor(getResources().getColor(android.R.color.white));
-                btn.setBackground(getResources().getDrawable(R.drawable.my_button));
-                btn.setLayoutParams(params);
-                mGridLayout.addView(btn);
-            }
-        }, element * mDelay);
-    }*/
 
     @Override
     public void onDestroy() {
