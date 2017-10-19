@@ -1,9 +1,12 @@
 package customviews;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
@@ -12,6 +15,8 @@ import com.example.sergey.matrixandroidtask.R;
 
 import java.util.Stack;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by Sergey on 10/18/2017.
  */
@@ -19,11 +24,13 @@ import java.util.Stack;
 public class MatrixView extends RelativeLayout {
     private int mWidth;
     private int mHeight;
-    private int itemDimension;
+    private int itemDimension = 250;
     private int[][] data;
+    private static final String TAG = "MatrixView";
     private Handler mHandler;
     public static int counter = 0;
     private int mDelay;
+    /*private ProgressDialog mProgressDialog;*/
 
     public MatrixView(Context context, final int[][] data, int delay) {
         super(context);
@@ -32,22 +39,22 @@ public class MatrixView extends RelativeLayout {
         mHandler = new Handler();
         mDelay = delay;
 
+        /*mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setMessage("Just a moment");*/
+
         //TODO : Weird delay bug is here
-        this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        /*this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 MatrixView.this.getViewTreeObserver().removeOnPreDrawListener(this);
-                mHeight = MatrixView.this.getHeight();
-                mWidth = MatrixView.this.getWidth();
-                itemDimension = 250;
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        fillMatrixItems();
-                    }
-                });
-                fillMatrixItems();
+
                 return false;
+            }
+        });*/
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                fillMatrixItems();
             }
         });
     }
@@ -57,8 +64,7 @@ public class MatrixView extends RelativeLayout {
         int cursor = 0;
         int counterToCenter;
         int center = data.length / 2;
-
-
+        Log.d(TAG, "fillMatrixItem has started");
         for (counterToCenter = 1; counterToCenter <= center; counterToCenter++) {
 
             for (cursor = counterToCenter - 1; cursor < data.length - counterToCenter + 1; cursor++) {
@@ -78,7 +84,7 @@ public class MatrixView extends RelativeLayout {
             }
 
         }
-
+        Log.d(TAG, "fillMatrixItem has finished");
         if (data.length % 2 == 1) {
             inflateItem(center, center);
         }
@@ -89,6 +95,7 @@ public class MatrixView extends RelativeLayout {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "inflate has finished");
                 MatrixItem item = new MatrixItem(getContext());
                 item.setMatrixItemText(String.valueOf(data[i][j]));
                 LayoutParams params = new LayoutParams(itemDimension, itemDimension);
@@ -97,8 +104,11 @@ public class MatrixView extends RelativeLayout {
                 params.setMargins(leftMargin, topMargin, 0, 0);
                 item.setLayoutParams(params);
                 MatrixView.this.addView(item);
+                requestLayout();
+                Log.d(TAG, "inflateItem has finished");
             }
         }, mDelay * counter);
+
     }
 
 

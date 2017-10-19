@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityApi {
     private static final String MATRIX_SIZE_KEY = "matrixsize";
     private static final String DELAY_KEY = "delay";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
