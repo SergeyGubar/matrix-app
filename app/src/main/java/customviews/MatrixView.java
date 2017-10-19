@@ -1,56 +1,36 @@
 package customviews;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
-import java.util.Stack;
+import java.security.cert.CertPathBuilder;
 
-import static android.content.ContentValues.TAG;
+import model.WeirdMatrix;
 
 /**
  * Created by Sergey on 10/18/2017.
  */
 
 public class MatrixView extends RelativeLayout {
-    private int mWidth;
-    private int mHeight;
     private int itemDimension = 250;
-    private int[][] data;
+    private WeirdMatrix mMatrix;
     private static final String TAG = "MatrixView";
     private Handler mHandler;
     public static int counter = 0;
     private int mDelay;
-    /*private ProgressDialog mProgressDialog;*/
 
-    public MatrixView(Context context, final int[][] data, int delay) {
+    public MatrixView(Context context, WeirdMatrix data, int delay) {
         super(context);
         View.inflate(context, R.layout.matrix_layout, this);
-        this.data = data;
-        mHandler = new Handler();
+        this.mMatrix = data;
         mDelay = delay;
-
-        /*mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage("Just a moment");*/
-
-        //TODO : Weird delay bug is here
-        /*this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                MatrixView.this.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                return false;
-            }
-        });*/
+        mHandler = new Handler();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -63,29 +43,35 @@ public class MatrixView extends RelativeLayout {
 
         int cursor = 0;
         int counterToCenter;
-        int center = data.length / 2;
-        Log.d(TAG, "fillMatrixItem has started");
+        int center = mMatrix.getData().length / 2;
+
+        // This loop looks a little bit scary, but the purpose is simple - to fill 2d array (matrix)
+        // In the right (spiral) order
+
+        Log.d(TAG, String.valueOf(center));
         for (counterToCenter = 1; counterToCenter <= center; counterToCenter++) {
 
-            for (cursor = counterToCenter - 1; cursor < data.length - counterToCenter + 1; cursor++) {
+            // This loop iterates to the bottom edge
+            for (cursor = counterToCenter - 1; cursor < mMatrix.getData().length - counterToCenter + 1; cursor++) {
                 inflateItem(cursor, counterToCenter - 1);
             }
-
-            for (cursor = counterToCenter; cursor < data.length - counterToCenter + 1; cursor++) {
-                inflateItem(data.length - counterToCenter, cursor);
+            // This loop iterates to the right edge
+            for (cursor = counterToCenter; cursor < mMatrix.getData().length - counterToCenter + 1; cursor++) {
+                inflateItem(mMatrix.getData().length - counterToCenter, cursor);
             }
-
-            for (cursor = data.length - counterToCenter - 1; cursor >= counterToCenter; cursor--) {
-                inflateItem(cursor, data.length - counterToCenter);
+            // To the top edge
+            for (cursor = mMatrix.getData().length - counterToCenter - 1; cursor >= counterToCenter; cursor--) {
+                inflateItem(cursor, mMatrix.getData().length - counterToCenter);
             }
-
-            for (cursor = data.length - counterToCenter; cursor >= counterToCenter; cursor--) {
+            // To the left edge
+            for (cursor = mMatrix.getData().length - counterToCenter; cursor >= counterToCenter; cursor--) {
                 inflateItem(counterToCenter - 1, cursor);
             }
 
+            // And again, starting from the top edge
         }
-        Log.d(TAG, "fillMatrixItem has finished");
-        if (data.length % 2 == 1) {
+        Log.d(TAG, "fillMatrix has finished");
+        if (mMatrix.getData().length % 2 == 1) {
             inflateItem(center, center);
         }
     }
@@ -97,7 +83,7 @@ public class MatrixView extends RelativeLayout {
             public void run() {
                 Log.d(TAG, "inflate has finished");
                 MatrixItem item = new MatrixItem(getContext());
-                item.setMatrixItemText(String.valueOf(data[i][j]));
+                item.setMatrixItemText(String.valueOf(mMatrix.getData()[i][j]));
                 LayoutParams params = new LayoutParams(itemDimension, itemDimension);
                 int leftMargin = j * itemDimension;
                 int topMargin = i * itemDimension;
@@ -117,8 +103,8 @@ public class MatrixView extends RelativeLayout {
         View.inflate(context, R.layout.matrix_layout, this);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void removeCallbacks() {
+        mHandler.removeCallbacksAndMessages(null);
     }
+
 }

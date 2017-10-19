@@ -19,6 +19,7 @@ import com.example.sergey.matrixandroidtask.R;
 
 import customviews.MatrixView;
 import helpers.MatrixHelper;
+import model.WeirdMatrix;
 
 /**
  * Created by Sergey on 10/17/2017.
@@ -31,26 +32,25 @@ public class MatrixFragment extends Fragment {
     private static final String DELAY_KEY = "delay";
     private static int mDelay;
     private static int mMatrixSize;
-    private Handler mHandler = new Handler();
-    private static int[][] mData;
-
+    private WeirdMatrix mMatrix;
+    private MatrixView view;
     //end test
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
-
+        Log.d(TAG, "Matrix Fragment is inflated");
         NestedScrollView layoutContainer = inflatedView.findViewById(R.id.main_container);
-
         Bundle args = getArguments();
 
+        // Get args for generating matrix
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
             mMatrixSize = args.getInt(MATRIX_SIZE_KEY);
             mDelay = args.getInt(DELAY_KEY);
-            mData = MatrixHelper.generateMatrix(mMatrixSize);
+            mMatrix = new WeirdMatrix(mMatrixSize);
         }
 
-        MatrixView view = new MatrixView(getContext(), mData, mDelay);
+        view = new MatrixView(getContext(), mMatrix, mDelay);
 
         layoutContainer.addView(view);
 
@@ -62,14 +62,14 @@ public class MatrixFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHandler = new Handler();
+        Log.d(TAG, "Matrix Fragment is created");
     }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
+//        view.removeCallbacks();
     }
 
 

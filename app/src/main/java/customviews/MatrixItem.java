@@ -15,6 +15,9 @@ import com.example.sergey.matrixandroidtask.R;
 public class MatrixItem extends RelativeLayout {
     private TextView mTextView;
 
+    // This class represents cell of the matrix.
+    // MatrixView uses this View.
+
     public MatrixItem(Context context) {
         super(context);
         View.inflate(context, R.layout.matrix_item, this);

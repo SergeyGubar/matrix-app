@@ -23,8 +23,11 @@ public class MatrixHelper {
         int counterToCenter;
         int center = size / 2;
 
+        // Just stack with data for matrix (correct data)
         Stack<Integer> stack = makeNumbersStack(size);
 
+
+        // Loop to fill in our matrix in the correct order
         for (counterToCenter = 1; counterToCenter <= center; counterToCenter++) {
 
             for (cursor = counterToCenter - 1; cursor < size - counterToCenter + 1; cursor++) {

@@ -9,12 +9,12 @@ import helpers.MatrixHelper;
  */
 
 public class WeirdMatrix {
-    private Stack<Integer> mData;
-
+    private int[][] mData;
     public WeirdMatrix(int size) {
-        mData = MatrixHelper.makeNumbersStack(size);
+        mData = MatrixHelper.generateMatrix(size);
     }
-    public int getNextItem() {
-        return mData.pop();
+
+    public int[][] getData() {
+        return mData;
     }
 }
