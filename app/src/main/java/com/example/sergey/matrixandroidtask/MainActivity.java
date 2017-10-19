@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityApi {
         Fragment fragment = new InputFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment)
                 .commit();
     }
 
