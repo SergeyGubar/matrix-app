@@ -24,7 +24,7 @@ public class MatrixView extends RelativeLayout {
     private Handler mHandler;
     public static int counter = 0;
 
-    public MatrixView(Context context,final int[][] data, int delay) {
+    public MatrixView(Context context, final int[][] data) {
         super(context);
         View.inflate(context, R.layout.matrix_layout, this);
         this.data = data;
@@ -102,7 +102,6 @@ public class MatrixView extends RelativeLayout {
             }
         }, 2 * counter);
     }
-
 
 
     public MatrixView(Context context, AttributeSet attrs) {
