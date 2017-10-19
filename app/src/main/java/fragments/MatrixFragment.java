@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class MatrixFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MatrixRecyclerAdapter mAdapter;
     private SpiralMatrix mMatrix;
-
+    private static int mMatrixDimension;
 
 
     //end test
@@ -47,16 +48,15 @@ public class MatrixFragment extends Fragment {
         Bundle args = getArguments();
 
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
-            int matrixDimension = args.getInt(MATRIX_SIZE_KEY);
-            mMatrix = new SpiralMatrix(matrixDimension);
+            mMatrixDimension = args.getInt(MATRIX_SIZE_KEY);
+            mMatrix = new SpiralMatrix(mMatrixDimension);
             mDelay = args.getInt(DELAY_KEY);
         }
 
         mRecyclerView = (RecyclerView) inflatedView.findViewById(R.id.matrix_recycler_view);
         mAdapter = new MatrixRecyclerAdapter(getContext(), mMatrix.getMatrix());
 
-        FixedGridLayoutManager manager = new FixedGridLayoutManager();
-        manager.setTotalColumnCount(mMatrix.getDimension());
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), mMatrixDimension);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
 

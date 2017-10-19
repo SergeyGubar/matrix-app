@@ -1,7 +1,9 @@
 package adapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,7 @@ import com.example.sergey.matrixandroidtask.R;
 
 public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAdapter.MyViewHolder> {
 
-    private TextView mTextView;
     private LayoutInflater mInflater;
-
-
     private int[][] mData = new int[0][];
     private int matrixLength = 0;
 
@@ -39,8 +38,8 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
     public void onBindViewHolder(MyViewHolder holder, int position) {
         int rowIndex = position / matrixLength;
         int columnIndex = position % matrixLength;
-        holder.updateUi(String.valueOf(position));
-//        mData[rowIndex][columnIndex]
+        holder.updateUi(String.valueOf(mData[rowIndex][columnIndex]));
+
     }
 
     @Override
@@ -50,7 +49,7 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-
+        private TextView mTextView;
         public MyViewHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.number_text_view);
