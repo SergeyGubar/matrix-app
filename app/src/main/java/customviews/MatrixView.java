@@ -1,5 +1,7 @@
 package customviews;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -88,6 +90,11 @@ public class MatrixView extends RelativeLayout {
             public void run() {
                 Log.d(TAG, "inflate has finished");
                 MatrixItem item = new MatrixItem(getContext());
+                item.setAlpha(0.0f);
+                item.animate()
+                        .translationY(item.getHeight())
+                        .alpha(1.0f)
+                        .setListener(null);
                 item.setMatrixItemText(String.valueOf(mMatrix.getData()[i][j]));
                 LayoutParams params = new LayoutParams(itemDimension, itemDimension);
                 int leftMargin = j * itemDimension;

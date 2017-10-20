@@ -1,7 +1,5 @@
 package fragments;
 
-import android.graphics.Matrix;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,14 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
 import customviews.MatrixView;
-import helpers.MatrixHelper;
 import model.WeirdMatrix;
 
 /**
@@ -33,14 +27,14 @@ public class MatrixFragment extends Fragment {
     private static int mDelay;
     private static int mMatrixSize;
     private WeirdMatrix mMatrix;
-    private MatrixView view;
+    private MatrixView mMatrixView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
         Log.d(TAG, "Matrix Fragment is inflated");
-        NestedScrollView layoutContainer = inflatedView.findViewById(R.id.main_container);
+        final NestedScrollView layoutContainer = (NestedScrollView) inflatedView.findViewById(R.id.main_container);
         Bundle args = getArguments();
 
         // Get args for generating matrix
@@ -50,14 +44,18 @@ public class MatrixFragment extends Fragment {
             mMatrix = new WeirdMatrix(mMatrixSize);
         }
 
-        view = new MatrixView(getContext(), mMatrix, mDelay);
 
         // Add our matrix to the container
-        layoutContainer.addView(view);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mMatrixView = new MatrixView(getContext(), mMatrix, mDelay);
+                layoutContainer.addView(mMatrixView);
+            }
+        });
 
         return inflatedView;
     }
-
 
 
     @Override
@@ -79,7 +77,7 @@ public class MatrixFragment extends Fragment {
         // doesn't display a new matrix. I can't even imagine, why does it work in this way, because
         // we've destroyed the fragment, and re-initialized new handler, so it shouldn't depend on the
         // state of a previous handler. But it does
-//        view.removeCallbacks();
+//        mMatrixView.removeCallbacks();
     }
 
 
