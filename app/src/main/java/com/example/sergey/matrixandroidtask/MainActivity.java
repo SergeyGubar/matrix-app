@@ -46,29 +46,5 @@ public class MainActivity extends AppCompatActivity implements MainActivityApi {
                 .commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.reset_fragment:
-                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if(fragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                    Fragment newFragment = new InputFragment();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, newFragment)
-                            .commit();
-                }
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
 
 }

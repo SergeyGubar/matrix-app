@@ -31,12 +31,17 @@ public class MatrixView extends RelativeLayout {
         this.mMatrix = data;
         mDelay = delay;
         mHandler = new Handler();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                fillMatrixItems();
-            }
-        });
+
+        // fillMatrixItems() can be called within post method if we want to display blank screen,
+        // and then start filling it, instead of waiting for a few seconds on a input screen
+
+//        mHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                fillMatrixItems();
+//            }
+//        });
+        fillMatrixItems();
     }
 
     private void fillMatrixItems() {

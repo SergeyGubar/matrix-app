@@ -23,7 +23,7 @@ public class MatrixHelper {
         int counterToCenter;
         int center = size / 2;
 
-        // Just stack with data for matrix (correct data)
+        // Just a stack with data for matrix (correct data)
         Stack<Integer> stack = makeNumbersStack(size);
 
 

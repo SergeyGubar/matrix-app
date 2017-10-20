@@ -10,6 +10,7 @@ import helpers.MatrixHelper;
 
 public class WeirdMatrix {
     private int[][] mData;
+
     public WeirdMatrix(int size) {
         mData = MatrixHelper.generateMatrix(size);
     }

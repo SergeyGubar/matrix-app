@@ -85,6 +85,7 @@ public class InputFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
+        // Initialize callback to the activity
         super.onAttach(context);
         mActivityApi = (MainActivityApi) context;
     }
