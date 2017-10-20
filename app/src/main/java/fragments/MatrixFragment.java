@@ -37,8 +37,6 @@ public class MatrixFragment extends Fragment {
     private static final String MATRIX_SIZE_KEY = "matrixsize";
     private static final String DELAY_KEY = "delay";
     private static int mDelay;
-    private RecyclerView mRecyclerView;
-    private MatrixRecyclerAdapter mAdapter;
     public static int mCellSize = 200;
     private SpiralMatrix mMatrix;
     private static int mMatrixDimension;
@@ -64,16 +62,6 @@ public class MatrixFragment extends Fragment {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mCellSize * arr.length, mCellSize * arr.length);
         view.setLayoutParams(params);
         rl.addView(view);
-/*
-
-        mRecyclerView = (RecyclerView) inflatedView.findViewById(R.id.matrix_recycler_view);
-        mAdapter = new MatrixRecyclerAdapter(getContext(), mMatrix.getMatrix());
-
-
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), mMatrixDimension);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(manager);
-*/
 
         return inflatedView;
     }

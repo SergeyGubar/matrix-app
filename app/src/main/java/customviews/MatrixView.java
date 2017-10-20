@@ -39,7 +39,6 @@ public class MatrixView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data.length; j++) {
                 int x = i * cellSize;
