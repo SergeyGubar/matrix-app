@@ -77,7 +77,7 @@ public class MatrixFragment extends Fragment {
         // doesn't display a new matrix. I can't even imagine, why does it work in this way, because
         // we've destroyed the fragment, and re-initialized new handler, so it shouldn't depend on the
         // state of a previous handler. But it does
-//        mMatrixView.removeCallbacks();
+        mMatrixView.removeCallbacks();
     }
 
 

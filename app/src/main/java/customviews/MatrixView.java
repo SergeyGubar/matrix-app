@@ -24,7 +24,7 @@ public class MatrixView extends RelativeLayout {
     private WeirdMatrix mMatrix;
     private static final String TAG = "MatrixView";
     private Handler mHandler;
-    public static int counter = 0;
+    public static int counter;
     private int mDelay;
 
     public MatrixView(Context context, WeirdMatrix data, int delay) {
@@ -32,17 +32,9 @@ public class MatrixView extends RelativeLayout {
         View.inflate(context, R.layout.matrix_layout, this);
         this.mMatrix = data;
         mDelay = delay;
+        counter = 0;
         mHandler = new Handler();
 
-        // fillMatrixItems() can be called within post method if we want to display blank screen,
-        // and then start filling it, instead of waiting for a few seconds on a input screen
-
-//        mHandler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                fillMatrixItems();
-//            }
-//        });
         fillMatrixItems();
     }
 
@@ -88,7 +80,7 @@ public class MatrixView extends RelativeLayout {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "inflate has finished");
+                Log.d(TAG, "inflate has started");
                 MatrixItem item = new MatrixItem(getContext());
                 item.setAlpha(0.0f);
                 item.animate()
@@ -118,5 +110,7 @@ public class MatrixView extends RelativeLayout {
     public void removeCallbacks() {
         mHandler.removeCallbacksAndMessages(null);
     }
+
+
 
 }
