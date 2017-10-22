@@ -1,28 +1,17 @@
 package fragments;
 
-import android.graphics.Matrix;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
 
 import com.example.sergey.matrixandroidtask.R;
 
 import adapters.FixedGridLayoutManager;
 import adapters.MatrixRecyclerAdapter;
-import customviews.MatrixView;
-import helpers.MatrixHelper;
 import model.SpiralMatrix;
 
 /**
@@ -40,8 +29,6 @@ public class MatrixFragment extends Fragment {
     private SpiralMatrix mMatrix;
     private static int mMatrixDimension;
 
-
-    //end test
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,11 +42,13 @@ public class MatrixFragment extends Fragment {
             mDelay = args.getInt(DELAY_KEY);
         }
 
-        mRecyclerView = (RecyclerView) inflatedView.findViewById(R.id.matrix_recycler_view);
+        mRecyclerView = (RecyclerView) inflatedView.findViewById(R.id.recycler_view);
         mAdapter = new MatrixRecyclerAdapter(getContext(), mMatrix.getMatrix());
 
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), mMatrixDimension);
+        FixedGridLayoutManager manager = new FixedGridLayoutManager();
+        manager.setTotalColumnCount(mMatrixDimension);
+
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
 
@@ -68,14 +57,6 @@ public class MatrixFragment extends Fragment {
 
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
 }

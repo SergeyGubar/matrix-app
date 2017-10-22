@@ -19,13 +19,11 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
 
     private LayoutInflater mInflater;
     private int[][] mData = new int[0][];
-    private int matrixLength = 0;
 
 
     public  MatrixRecyclerAdapter(Context ctx, int[][] data) {
         mInflater = LayoutInflater.from(ctx);
         mData = data;
-        matrixLength = data.length;
     }
 
     @Override
@@ -36,10 +34,9 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        int rowIndex = position / matrixLength;
-        int columnIndex = position % matrixLength;
-        holder.updateUi(String.valueOf(mData[rowIndex][columnIndex]));
-
+        int rowIndex = position / mData.length;
+        int columnIndex = position % mData.length;
+        holder.updateUi(String.valueOf(String.valueOf(mData[rowIndex][columnIndex])));
     }
 
     @Override
