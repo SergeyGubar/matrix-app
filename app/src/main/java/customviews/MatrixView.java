@@ -1,5 +1,6 @@
 package customviews;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -30,8 +31,12 @@ public class MatrixView extends RelativeLayout {
         mDelay = delay;
         mCounter = 0;
         mHandler = new Handler();
-
-        fillMatrixItems();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                fillMatrixItems();
+            }
+        });
     }
 
     private void fillMatrixItems() {
