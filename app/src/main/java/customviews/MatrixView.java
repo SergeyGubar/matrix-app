@@ -1,7 +1,5 @@
 package customviews;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -10,8 +8,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.example.sergey.matrixandroidtask.R;
-
-import java.security.cert.CertPathBuilder;
 
 import model.WeirdMatrix;
 
@@ -24,7 +20,7 @@ public class MatrixView extends RelativeLayout {
     private WeirdMatrix mMatrix;
     private static final String TAG = "MatrixView";
     private Handler mHandler;
-    public static int counter;
+    public static int mCounter;
     private int mDelay;
 
     public MatrixView(Context context, WeirdMatrix data, int delay) {
@@ -32,7 +28,7 @@ public class MatrixView extends RelativeLayout {
         View.inflate(context, R.layout.matrix_layout, this);
         this.mMatrix = data;
         mDelay = delay;
-        counter = 0;
+        mCounter = 0;
         mHandler = new Handler();
 
         fillMatrixItems();
@@ -76,7 +72,7 @@ public class MatrixView extends RelativeLayout {
     }
 
     private void inflateItem(final int i, final int j) {
-        counter++;
+        mCounter++;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -97,7 +93,7 @@ public class MatrixView extends RelativeLayout {
                 requestLayout();
                 Log.d(TAG, "inflateItem has finished");
             }
-        }, mDelay * counter);
+        }, mDelay * mCounter);
 
     }
 

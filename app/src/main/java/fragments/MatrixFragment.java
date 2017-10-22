@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -28,13 +29,14 @@ public class MatrixFragment extends Fragment {
     private static int mMatrixSize;
     private WeirdMatrix mMatrix;
     private MatrixView mMatrixView;
+    private NestedScrollView layoutContainer;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.fragment_matrix, container, false);
         Log.d(TAG, "Matrix Fragment is inflated");
-        final NestedScrollView layoutContainer = (NestedScrollView) inflatedView.findViewById(R.id.main_container);
+        layoutContainer = (NestedScrollView) inflatedView.findViewById(R.id.main_container);
         Bundle args = getArguments();
 
         // Get args for generating matrix
@@ -68,16 +70,9 @@ public class MatrixFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        // Here is the source of the bug in the app. If we don't remove callbacks from handler
-        // it will be creating views in background, even if we leave the screen.
-        // The obvious solution is to remove all pended tasks in a handler. But it doesn't work, and I do
-        // not know why. Yes, tasks are removed from the handler, and it doesn't do anything when we leave
-        // matrix screen, but when we return to it (for example swap input and matrix fragment) the handler
-        // doesn't display a new matrix. I can't even imagine, why does it work in this way, because
-        // we've destroyed the fragment, and re-initialized new handler, so it shouldn't depend on the
-        // state of a previous handler. But it does
-        mMatrixView.removeCallbacks();
+        if (mMatrixView != null) {
+            mMatrixView.removeCallbacks();
+        }
     }
 
 
