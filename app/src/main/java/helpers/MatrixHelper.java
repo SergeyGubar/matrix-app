@@ -7,7 +7,7 @@ import java.util.Stack;
  */
 
 public class MatrixHelper {
-
+    // This class is used for generating the correct matrix and manipulating it
     /**
      *
      * @param size - size of generated matrix
@@ -17,8 +17,6 @@ public class MatrixHelper {
 
         int[][] matrix = new int[size][size];
 
-
-        int value = 1;
         int cursor = 0;
         int counterToCenter;
         int center = size / 2;

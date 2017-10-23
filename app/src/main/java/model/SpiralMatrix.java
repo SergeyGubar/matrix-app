@@ -16,12 +16,8 @@ public class SpiralMatrix {
         mData = MatrixHelper.generateMatrix(size);
     }
 
-
     public int[][] getMatrix() {
         return mData;
     }
 
-    public int getDimension() {
-        return mData.length;
-    }
 }

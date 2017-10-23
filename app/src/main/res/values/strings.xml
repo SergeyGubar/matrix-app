@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MatrixAndroidTask</string>
+    <string name="app_name">Matrix Main</string>
     <string name="go">Go!</string>
     <string name="enter_matrix_size">Enter matrix size</string>
     <string name="remove_matrix">Remove Matrix</string>

@@ -17,6 +17,8 @@ import com.example.sergey.matrixandroidtask.R;
 
 public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAdapter.MyViewHolder> {
 
+    //Custom adapter for the RecyclerView, built upon a 2d array
+
     private LayoutInflater mInflater;
     private int[][] mData = new int[0][];
 
@@ -34,6 +36,7 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        // A bit tricky moment which allows to retrieve correct data from 2d array using only one index :)
         int rowIndex = position / mData.length;
         int columnIndex = position % mData.length;
         holder.updateUi(String.valueOf(String.valueOf(mData[rowIndex][columnIndex])));
@@ -41,16 +44,19 @@ public class MatrixRecyclerAdapter extends RecyclerView.Adapter<MatrixRecyclerAd
 
     @Override
     public int getItemCount() {
+        // The matrix is square, so the length should be the length ^ 2
         return mData.length * mData.length;
     }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.number_text_view);
         }
+
         public void updateUi(String text) {
             mTextView.setText(text);
         }

@@ -85,6 +85,7 @@ public class InputFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
+        // Add callback so the activity can replace this fragment by another
         super.onAttach(context);
         mActivityApi = (MainActivityApi) context;
     }

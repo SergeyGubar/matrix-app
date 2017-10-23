@@ -36,6 +36,8 @@ public class MatrixFragment extends Fragment {
 
         Bundle args = getArguments();
 
+        // Get those variables we need from the inputFragment
+
         if (args != null && args.containsKey(MATRIX_SIZE_KEY)) {
             mMatrixDimension = args.getInt(MATRIX_SIZE_KEY);
             mMatrix = new SpiralMatrix(mMatrixDimension);
