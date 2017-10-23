@@ -1,7 +1,7 @@
 ### What is this repository for? ###
 
 * Quick summary
-This repo is the source code of MatrixAndroidTask app. This app allows generates matrix N*N (based on the user's input) and displays it with fancy animations in the specific order
+This is the Canvas version of the app
 
 ### How to use this app? ###
 * Download it and install on your phone
